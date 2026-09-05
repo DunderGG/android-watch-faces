@@ -1,4 +1,4 @@
-# Android Wear Watch Faces
+# <img width="64" height="64" alt="appicon" src="https://github.com/user-attachments/assets/ba2344ea-54d9-4eaa-a521-638695f51351" /> Android Wear Watch Faces
 
 A resource-only Wear OS watch-face project using **Watch Face Format (WFF)**.
 The included `Starter Digital` face displays a 24-hour clock and is designed to
