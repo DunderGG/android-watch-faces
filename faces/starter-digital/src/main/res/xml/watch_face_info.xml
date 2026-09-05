@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  =============================================================================
+  STARTER DIGITAL — WATCH FACE METADATA (WatchFaceInfo)
+  =============================================================================
+  Wear OS reads this XML configuration file to determine how the watch face
+  is displayed and interacted with inside the watch-face picker and phone app.
+  =============================================================================
+-->
 <WatchFaceInfo>
+    <!--
+      Preview image shown in the picker carousel and companion app.
+      Points to @drawable/preview (preview.png or preview.xml).
+    -->
     <Preview value="@drawable/preview" />
+
+    <!--
+      Category grouping in the face gallery.
+      CATEGORY_EMPTY places the face in the default general category.
+    -->
     <Category value="CATEGORY_EMPTY" />
+
+    <!--
+      Editable: Determines whether the user sees a "Customize" button in the
+      picker. Set to "false" when the face has no configurations.
+      NOTE: In Milestone 2, change this to "true" once complication slots
+      or color palette options are introduced.
+    -->
     <Editable value="false" />
+
+    <!--
+      MultipleInstancesAllowed: Allows the wearer to add multiple copies of this
+      watch face to their favorites list (useful when they want different color
+      or complication setups for work, fitness, etc.).
+    -->
     <MultipleInstancesAllowed value="true" />
 </WatchFaceInfo>
-

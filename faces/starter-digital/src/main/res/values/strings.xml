@@ -1,4 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  =============================================================================
+  STARTER DIGITAL — LOCALIZABLE STRINGS
+  =============================================================================
+  Standard Android string resources used for user-facing text labels.
+  These can be translated into multiple languages by adding localized
+  resource folders (e.g., values-sv/, values-es/, etc.).
+  =============================================================================
+-->
 <resources>
+    <!--
+      The user-facing title of the watch face.
+      Referenced by:
+      - AndroidManifest.xml (<application android:label="@string/watch_face_name">)
+      - The watch face selector carousel on the watch
+      - The Wear OS companion app on the connected phone
+    -->
     <string name="watch_face_name">Starter Digital</string>
 </resources>
-

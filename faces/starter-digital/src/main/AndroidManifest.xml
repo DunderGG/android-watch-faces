@@ -1,21 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  =============================================================================
+  STARTER DIGITAL — ANDROID MANIFEST
+  =============================================================================
+  The AndroidManifest declares package capabilities and metadata to Wear OS.
+  Unlike standard Android applications, a Watch Face Format (WFF) APK contains
+  NO compiled bytecode (no Kotlin/Java/Dex execution).
+  =============================================================================
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Declares that this application is specifically designed for Wear OS smartwatches -->
     <uses-feature android:name="android.hardware.type.watch" />
 
-    <!-- WFF faces are resources interpreted by Wear OS; no app code belongs here. -->
+    <!--
+      <application>:
+      - android:hasCode="false": CRITICAL. Tells the Android OS that this package
+        contains no application code. Wear OS natively parses and renders the XML
+        resources directly in the system server, saving RAM and CPU overhead.
+      - android:icon: Icon displayed in system settings and application lists.
+      - android:label: Name displayed for the application.
+    -->
     <application
         android:hasCode="false"
         android:icon="@drawable/preview"
         android:label="@string/watch_face_name">
+
+        <!--
+          standalone="true": Indicates this watch face runs independently on the watch
+          and does not require a companion Android app installed on a smartphone.
+        -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
+
+        <!--
+          format.version: The Watch Face Format (WFF) specification version used.
+          - Version 4 matches Wear OS 6 (API level 36).
+          - Use the lowest version that supports the XML features your face needs.
+        -->
         <property
             android:name="com.google.wear.watchface.format.version"
             android:value="4" />
+
+        <!--
+          format.publisher: Informational metadata identifying the developer or studio.
+        -->
         <property
             android:name="com.google.wear.watchface.format.publisher"
             android:value="DunderGG" />
     </application>
 </manifest>
-

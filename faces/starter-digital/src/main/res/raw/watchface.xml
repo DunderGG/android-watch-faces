@@ -1,11 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Starter Digital: A data-first Wear OS watch face using Watch Face Format (WFF).
-  Canvas: logical 450 x 450 coordinate system scaled by Wear OS.
+  =============================================================================
+  STARTER DIGITAL — WATCH FACE FORMAT (WFF) SCENE DEFINITION
+  =============================================================================
+  This file defines the visual layout, typography, and dynamic data bindings
+  for the watch face.
+
+  Key Concepts of Watch Face Format:
+  1. Declarative: You describe WHAT should appear on screen. The Wear OS
+     system handles the rendering loop, timing, and power management.
+  2. Logical Canvas: Coordinates (450 x 450) are virtual. Wear OS scales them
+     automatically to fit the physical resolution of the watch display.
+  3. Safe Area: In a circular display (clipShape="CIRCLE"), the corners are
+     clipped. Keep content away from the extreme edges.
+  4. Layer Ordering: Elements inside <Scene> render in order from top to bottom
+     (later elements appear on top of earlier elements).
+  =============================================================================
 -->
 <WatchFace width="450" height="450" clipShape="CIRCLE">
+
+    <!--
+      <Scene>: The root visual container.
+      - backgroundColor: Explicitly set to solid black (#FF000000). On OLED
+        displays, black pixels are completely powered off, minimizing battery draw.
+    -->
     <Scene backgroundColor="#ff000000">
-        <!-- Top Zone: Date & Day in Amber accent -->
+
+        <!--
+          =====================================================================
+          ZONE 1: TOP ZONE — DAY & DATE (ACCENT)
+          =====================================================================
+          - Positioned in the upper safe arc (y="90", height="45").
+          - Uses vibrant Amber (#FFFFB300) to provide an immediate color accent.
+          - WFF Tag Expressions:
+            * [DAY_OF_WEEK_S] -> Short day of week string (e.g., "MON", "SAT")
+            * [MONTH_S]       -> Short month string (e.g., "JAN", "SEP")
+            * [DAY]           -> Day of month integer (1-31)
+          - <Template>: Uses C-style format specifiers (%s for strings, %d for ints).
+            Wrapping in <![CDATA[ ... ]]> prevents whitespace trimming issues.
+        -->
         <PartText x="25" y="90" width="400" height="45">
             <Text align="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="24" color="#FFFFB300">
@@ -18,7 +51,19 @@
             </Text>
         </PartText>
 
-        <!-- Center Zone: Digital Clock (24h) in crisp white -->
+        <!--
+          =====================================================================
+          ZONE 2: CENTER ZONE — DIGITAL CLOCK (PRIMARY TIME READ)
+          =====================================================================
+          - Centered vertically (y="145", height="135").
+          - Uses high-contrast Crisp White (#FFFFFFFF) with a large font (size="92").
+          - family="SYNC_TO_DEVICE": Automatically inherits the Wear OS system
+            font (Material 3), ensuring consistent platform styling.
+          - WFF Tag Expressions:
+            * [HOUR_0_23] -> 24-hour format hour (0-23)
+            * [MINUTE]    -> Minute integer (0-59)
+          - "%02d:%02d" formats numbers with a leading zero (e.g., "09:05").
+        -->
         <PartText x="25" y="145" width="400" height="135">
             <Text align="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="92" color="#FFFFFFFF">
@@ -30,7 +75,19 @@
             </Text>
         </PartText>
 
-        <!-- Bottom Zone: Battery percentage (Zone reserved for complication slots in Milestone 2) -->
+        <!--
+          =====================================================================
+          ZONE 3: BOTTOM ZONE — HARDWARE METRICS / COMPLICATION AREA
+          =====================================================================
+          - Positioned in the lower quadrant (y="295", height="40").
+          - Uses a muted Cool Slate color (#FF8A9BA8) so secondary data does
+            not visually compete with the primary time read.
+          - WFF Tag Expression:
+            * [BATTERY_PERCENT] -> Current watch battery level (integer 0-100)
+          - "%%" in the template outputs a literal percent sign.
+          - NOTE: In Milestone 2, this zone will host customizable
+            <ComplicationSlot> elements for user-selected widgets (steps, weather).
+        -->
         <PartText x="25" y="295" width="400" height="40">
             <Text align="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="20" color="#FF8A9BA8">
@@ -40,5 +97,6 @@
                 </Font>
             </Text>
         </PartText>
+
     </Scene>
 </WatchFace>
