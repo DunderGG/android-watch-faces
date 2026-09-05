@@ -1,0 +1,34 @@
+.gradle/
+.idea/
+local.properties
+build/
+**/build/
+*.iml
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.pem
+key.properties
+signing.properties
+.env
+.env.*
+captures/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor
+.vscode/
+
+# Build & dump artifacts
+*.apk
+*.aab
+*.dex
+*.hprof
+
+# C++/NDK
+.externalNativeBuild/
+.cxx/

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Starter Digital is intentionally small. WFF uses a logical 450 x 450 canvas;
+  Wear OS scales it to the actual watch display. Keep UI elements inside the
+  circular safe area when adding to this face.
+-->
+<WatchFace width="450" height="450" clipShape="CIRCLE">
+    <Scene backgroundColor="#ff000000">
+        <PartText x="25" y="135" width="400" height="180">
+            <Text align="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="92" color="#FFFFFFFF">
+                    <Template><![CDATA[%02d:%02d]]>
+                        <Parameter expression="[HOUR_0_23]" />
+                        <Parameter expression="[MINUTE]" />
+                    </Template>
+                </Font>
+            </Text>
+        </PartText>
+
+        <PartText x="25" y="290" width="400" height="50">
+            <Text align="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="18" color="#FFAAAAAA">STARTER DIGITAL</Font>
+            </Text>
+        </PartText>
+    </Scene>
+</WatchFace>
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- WFF faces are resources interpreted by Wear OS; no app code belongs here. -->
+    <application
+        android:hasCode="false"
+        android:icon="@drawable/preview"
+        android:label="@string/watch_face_name">
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+        <property
+            android:name="com.google.wear.watchface.format.version"
+            android:value="4" />
+        <property
+            android:name="com.google.wear.watchface.format.publisher"
+            android:value="DunderGG" />
+    </application>
+</manifest>
+

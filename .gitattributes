@@ -1,0 +1,17 @@
+# Auto-detect text files and normalize line endings to LF
+* text=auto
+
+# Ensure gradlew uses LF line endings (required for Linux/macOS/CI execution)
+gradlew text eol=lf
+
+# Windows scripts use CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary assets
+*.jar binary
+*.png binary
+*.webp binary
+*.keystore binary
+*.jks binary
+
