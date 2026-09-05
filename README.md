@@ -33,6 +33,7 @@ Android App Bundle (AAB) needed for Google Play.
   a real screenshot before publishing.
 - `docs/architecture.md` — how the pieces fit together.
 - `docs/roadmap.md` — the suggested next tasks.
+- `CONTRIBUTING.md` — guidelines for licensing, assets, and adding new faces.
 
 Before changing the package name, update both `namespace` and `applicationId` in
 `faces/<watch-face-module>/build.gradle.kts`. Use a globally unique value when you

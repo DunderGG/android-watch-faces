@@ -17,7 +17,7 @@ resource-only Android bundle (APK for debug, AAB for release)
 Wear OS WFF runtime ----> renders scene + platform data + user settings
           |
           v
-Pixel Watch display and face editor
+Wear OS display and face editor
 ```
 
 That is why there is no `MainActivity`, service, Kotlin source set, or Compose UI
@@ -25,7 +25,60 @@ in this module. As of January 2026, Watch Face Format is required for installing
 watch faces on Wear OS devices. The architecture is intentionally declarative:
 describe *what* should appear, not a rendering loop for *how* to draw it.
 
+## Key architectural benefits
+
+> Why declarative XML watch faces outperform traditional code-driven implementations.
+
+- **Battery Optimization**: System-level batching and sleep intervals prevent rogue CPU/GPU wake locks.
+- **Crash Resilience**: Watch faces cannot trigger Application Not Responding (ANR) dialogs or JVM crashes.
+- **Security**: Zero executable code means minimal attack surface.
+
+## Coordinate system and layers
+
+> Logical canvas scaling, circular viewport boundaries, and z-index ordering.
+
+`WatchFace width="450" height="450"` is a logical coordinate system, not the
+watch's physical resolution. Wear OS scales it for the device. Keep important
+content away from the corners because this starter declares `clipShape="CIRCLE"`.
+Within `<Scene>`, elements declared later appear over earlier elements.
+
+The starter uses `PartText` and a `Template`. The template receives WFF data
+tokens (`[HOUR_0_23]` and `[MINUTE]`) as parameters and formats them with
+`%02d:%02d`; the system updates the result without application code.
+
+## Scene layout & visual pipeline
+
+> Watch faces are structured as a 2D canvas (standard reference: 450x450 pixels) centered on circular viewports.
+
+- **`<Scene>`**: Top-level canvas container. Specifies properties like background color.
+- **`<PartDraw>`**: Vector or basic geometric shapes (rectangles, circles, strokes).
+- **`<PartText>`**: Text rendered using device fonts (`SYNC_TO_DEVICE`) or custom bundled fonts.
+- **`<PartImage>`**: Static bitmap or vector drawables.
+- **`<ComplicationSlot>`**: Interoperable widgets populated by external apps (Step Counter, Heart Rate, Weather).
+
+## Ambient mode (Always-On Display / AOD)
+
+> OLED displays on smartwatches require strict burn-in protection and power management.
+
+- **Pixel Ratio Limit**: Total lit pixels in Ambient mode should stay well below 15% (ideally < 10%).
+- **Color Palette**: Turn bright background fills off (`#FF000000` / transparent). Use muted colors or grayscale for text and icons.
+- **De-cluttering**: Hide seconds counters, sub-dials, and non-essential complications during ambient mode using `<Variant mode="AMBIENT">`.
+
+## The normal extension path
+
+> Recommended progression for taking a watch face from a basic clock to an interactive, customizable design.
+
+1. Add static decoration with `PartDraw` / shapes or a `PartImage` resource.
+2. Add a date or another system expression using `PartText` plus `Template`.
+3. Add a `Complication` slot so the wearer can select a platform data source.
+4. Add `UserConfigurations` for colors, styles, and presets; set `Editable` to
+   `true` when the face exposes a setting or non-fixed complication.
+5. Add `Variant` content for ambient mode: lower visual complexity, no animated
+   effects, and readable high-contrast time.
+
 ## Repository strategy: one module per face
+
+> Structuring each watch face as an independent Android application module and App Bundle.
 
 Treat every independently installable face as its own Android application module
 and, for Play distribution, its own WFF Android App Bundle (AAB). Each module
@@ -42,6 +95,8 @@ module and publish its bundle separately.
 
 ## Files and responsibilities
 
+> Directory overview and specific roles of manifests, resources, scene graphs, and build scripts.
+
 | File | Responsibility |
 | --- | --- |
 | `AndroidManifest.xml` | Identifies a watch-only, no-code application and declares the WFF version. |
@@ -51,28 +106,9 @@ module and publish its bundle separately.
 | `values/strings.xml` | Localizable labels. |
 | Gradle files | Package identity, SDK compatibility, and debug/release builds. |
 
-## Coordinate system and layers
-
-`WatchFace width="450" height="450"` is a logical coordinate system, not the
-watch's physical resolution. Wear OS scales it for the device. Keep important
-content away from the corners because this starter declares `clipShape="CIRCLE"`.
-Within `<Scene>`, elements declared later appear over earlier elements.
-
-The starter uses `PartText` and a `Template`. The template receives WFF data
-tokens (`[HOUR_0_23]` and `[MINUTE]`) as parameters and formats them with
-`%02d:%02d`; the system updates the result without application code.
-
-## The normal extension path
-
-1. Add static decoration with `PartDraw` / shapes or a `PartImage` resource.
-2. Add a date or another system expression using `PartText` plus `Template`.
-3. Add a `Complication` slot so the wearer can select a platform data source.
-4. Add `UserConfigurations` for colors, styles, and presets; set `Editable` to
-   `true` when the face exposes a setting or non-fixed complication.
-5. Add `Variant` content for ambient mode: lower visual complexity, no animated
-   effects, and readable high-contrast time.
-
 ## Compatibility policy
+
+> Balancing XML feature capabilities against minimum Wear OS and Android API version targets.
 
 WFF features are versioned. The manifest's WFF version and the module's
 `minSdk` jointly determine which watches can install the face. This starter uses
@@ -89,6 +125,8 @@ official WFF version documentation before changing either value.
 
 ## Build, test, release
 
+> Producing local debug APKs for device testing and signed release AABs for Google Play publishing.
+
 Android Studio is the recommended path because it offers WFF-aware completion,
 validation, and a watch-face run configuration. Build an APK for local device or
 emulator testing; build an AAB for Play. Before release, replace the temporary
@@ -99,6 +137,8 @@ Keep a WFF watch-face AAB separate from an AAB containing normal Wear OS app
 logic; Google Play does not accept a single bundle that includes both.
 
 ## Design constraints worth remembering
+
+> Core guidelines for battery longevity, typography, circular displays, and edge cases.
 
 - Battery and legibility are product requirements, not cleanup work.
 - Test round displays and all editor states, not only the happy-path screenshot.
