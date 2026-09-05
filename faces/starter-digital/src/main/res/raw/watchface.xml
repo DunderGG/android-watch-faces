@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Starter Digital is intentionally small. WFF uses a logical 450 x 450 canvas;
-  Wear OS scales it to the actual watch display. Keep UI elements inside the
-  circular safe area when adding to this face.
+  Starter Digital: A data-first Wear OS watch face using Watch Face Format (WFF).
+  Canvas: logical 450 x 450 coordinate system scaled by Wear OS.
 -->
 <WatchFace width="450" height="450" clipShape="CIRCLE">
     <Scene backgroundColor="#ff000000">
-        <PartText x="25" y="135" width="400" height="180">
+        <!-- Top Zone: Date & Day in Amber accent -->
+        <PartText x="25" y="90" width="400" height="45">
+            <Text align="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="24" color="#FFFFB300">
+                    <Template><![CDATA[%s, %s %d]]>
+                        <Parameter expression="[DAY_OF_WEEK_S]" />
+                        <Parameter expression="[MONTH_S]" />
+                        <Parameter expression="[DAY]" />
+                    </Template>
+                </Font>
+            </Text>
+        </PartText>
+
+        <!-- Center Zone: Digital Clock (24h) in crisp white -->
+        <PartText x="25" y="145" width="400" height="135">
             <Text align="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="92" color="#FFFFFFFF">
                     <Template><![CDATA[%02d:%02d]]>
@@ -17,11 +30,15 @@
             </Text>
         </PartText>
 
-        <PartText x="25" y="290" width="400" height="50">
+        <!-- Bottom Zone: Battery percentage (Zone reserved for complication slots in Milestone 2) -->
+        <PartText x="25" y="295" width="400" height="40">
             <Text align="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="18" color="#FFAAAAAA">STARTER DIGITAL</Font>
+                <Font family="SYNC_TO_DEVICE" size="20" color="#FF8A9BA8">
+                    <Template><![CDATA[%d%% BATTERY]]>
+                        <Parameter expression="[BATTERY_PERCENT]" />
+                    </Template>
+                </Font>
             </Text>
         </PartText>
     </Scene>
 </WatchFace>
-

@@ -4,21 +4,22 @@ This is deliberately sequenced so that each step produces something testable.
 
 ## Milestone 0 — Tooling and first install
 
-- [ ] Install Android Studio and JDK 17.
-- [ ] Enable developer options and ADB debugging on the Pixel Watch, or create a
+- [X] Install Android Studio and JDK 17.
+- [X] Enable developer options and ADB debugging on the Pixel Watch, or create a
   matching Wear OS emulator.
-- [ ] Open this project and run `Starter Digital`.
-- [ ] Confirm that its time changes and that it appears in the face picker.
+- [X] Open this project and run `Starter Digital`.
+- [X] Confirm that its time changes and that it appears in the face picker.
 
 **Done when:** the starter face is visible on a device or emulator.
 
 ## Milestone 1 — Make the first face yours
 
-- [ ] Decide on one small visual idea: e.g. minimalist, sport, retro, or data-first.
-- [ ] Change the face name and package identity.
-- [ ] Modify typography, spacing, and colors in `watchface.xml`.
-- [ ] Capture a device screenshot and replace the temporary preview.
-- [ ] Record the design choices in a short `docs/faces/starter-digital.md` note.
+- [X] Decide on one small visual idea: e.g. minimalist, sport, retro, or data-first.
+  - Starting with data-first, as it is great for learning the Watch Face Format (WFF). It plays directly to WFF's architecture and it flows naturally into Milestone 2
+- [X] Change the face name and package identity.
+- [X] Modify typography, spacing, and colors in `watchface.xml`.
+- [X] Capture a device screenshot and replace the temporary preview.
+- [X] Record the design choices in a short `docs/faces/starter-digital.md` note.
 
 **Done when:** you can recognize it as your own face from its picker preview.
 
